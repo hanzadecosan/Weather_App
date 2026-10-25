@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -121,46 +122,56 @@ private fun MetricGlyph(symbol: MetricSymbol, color: Color) {
 
 @Composable
 internal fun SolarLightCard(timeline: WeatherTimeline, kind: WeatherKind, appearance: WeatherAppearance) {
-    GlassPanel(appearance) {
+    val sunrise = when (timeline.phase) {
+        SolarPhase.DAWN -> true
+        SolarPhase.SUNSET -> false
+        else -> timeline.nextEvent?.sunrise == true
+    }
+    val palette = solarCardPalette(sunrise, dark = appearance.isDark)
+    val shape = RoundedCornerShape(28.dp)
+    Column(Modifier.fillMaxWidth()
+        .background(Brush.linearGradient(palette.colors), shape)
+        .border(1.dp, palette.border, shape)
+        .padding(20.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text(when (timeline.phase) {
                     SolarPhase.DAWN -> "GÜNÜN İLK IŞIĞI"
                     SolarPhase.SUNSET -> "ALTIN SAAT"
                     else -> "GÜN IŞIĞININ RİTMİ"
-                }, color = appearance.muted, fontSize = 10.sp, letterSpacing = 1.5.sp)
+                }, color = palette.muted, fontSize = 10.sp, letterSpacing = 1.5.sp)
                 Spacer(Modifier.height(6.dp))
-                Text(solarMessage(timeline), color = appearance.ink, fontSize = 17.sp,
+                Text(solarMessage(timeline), color = palette.ink, fontSize = 17.sp,
                     lineHeight = 23.sp, fontWeight = FontWeight.Medium)
             }
-            WeatherMotion(WeatherKind.SUNNY, phase = if (timeline.phase == SolarPhase.DAWN || timeline.nextEvent?.sunrise == true) SolarPhase.DAWN else SolarPhase.SUNSET,
+            WeatherMotion(WeatherKind.SUNNY, phase = if (sunrise) SolarPhase.DAWN else SolarPhase.SUNSET,
                 modifier = Modifier.padding(start = 12.dp).size(58.dp))
         }
         Spacer(Modifier.height(16.dp))
-        DaylightTrack(timeline, appearance)
+        DaylightTrack(timeline, palette.ink)
         Row(Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-            Text("Doğuş ${timeline.sunrise?.format(WeatherHourFormat) ?: "—"}", color = appearance.muted, fontSize = 11.sp)
-            Text("Batış ${timeline.sunset?.format(WeatherHourFormat) ?: "—"}", color = appearance.muted, fontSize = 11.sp)
+            Text("Doğuş ${timeline.sunrise?.format(WeatherHourFormat) ?: "—"}", color = palette.muted, fontSize = 11.sp)
+            Text("Batış ${timeline.sunset?.format(WeatherHourFormat) ?: "—"}", color = palette.muted, fontSize = 11.sp)
         }
         if (kind != WeatherKind.SUNNY) {
             Text("Görünürlük hava koşullarına bağlıdır.", modifier = Modifier.padding(top = 8.dp),
-                color = appearance.muted, fontSize = 10.sp)
+                color = palette.muted, fontSize = 10.sp)
         }
     }
 }
 
 @Composable
-private fun DaylightTrack(timeline: WeatherTimeline, appearance: WeatherAppearance) {
+private fun DaylightTrack(timeline: WeatherTimeline, ink: Color) {
     val progress = if (timeline.sunrise != null && timeline.sunset != null) {
         val length = Duration.between(timeline.sunrise, timeline.sunset).seconds
         if (length > 0) (Duration.between(timeline.sunrise, timeline.now).seconds.toFloat() / length).coerceIn(0f,1f) else null
     } else null
     Canvas(Modifier.fillMaxWidth().height(10.dp)) {
         val y = size.height / 2
-        drawLine(appearance.ink.copy(alpha = .12f), Offset(0f,y), Offset(size.width,y), 2.dp.toPx(), StrokeCap.Round)
+        drawLine(ink.copy(alpha = .12f), Offset(0f,y), Offset(size.width,y), 2.dp.toPx(), StrokeCap.Round)
         if (progress != null) {
-            drawLine(appearance.ink.copy(alpha = .5f), Offset(0f,y), Offset(size.width*progress,y),2.dp.toPx(),StrokeCap.Round)
-            drawCircle(appearance.ink, radius = 4.dp.toPx(),center=Offset(size.width*progress,y))
+            drawLine(ink.copy(alpha = .5f), Offset(0f,y), Offset(size.width*progress,y),2.dp.toPx(),StrokeCap.Round)
+            drawCircle(ink, radius = 4.dp.toPx(),center=Offset(size.width*progress,y))
         }
     }
 }

@@ -2,6 +2,29 @@ package com.example.hava.ui.weather
 
 import androidx.compose.ui.graphics.Color
 
+/** The solar widget has its own event palette, independent of the screen background. */
+internal data class SolarCardPalette(
+    val colors: List<Color>,
+    val ink: Color,
+    val border: Color
+) {
+    val muted: Color get() = ink.copy(alpha = 0.90f)
+}
+
+internal fun solarCardPalette(sunrise: Boolean, dark: Boolean): SolarCardPalette {
+    val colors = when {
+        sunrise && dark -> listOf(Color(0xFF40374F), Color(0xFF714451), Color(0xFF835846))
+        sunrise -> listOf(Color(0xFFEAC8EF), Color(0xFFF6C2C2), Color(0xFFFFE3B4))
+        dark -> listOf(Color(0xFF7A4537), Color(0xFF6A3449), Color(0xFF40324F))
+        else -> listOf(Color(0xFFFFCE88), Color(0xFFF8A683), Color(0xFFED9199))
+    }
+    return SolarCardPalette(
+        colors = colors,
+        ink = if (dark) Color(0xFFFFF4E7) else Color(0xFF402A35),
+        border = Color.White.copy(alpha = if (dark) 0.24f else 0.65f)
+    )
+}
+
 /** Visual tokens only. Forecast and solar-time decisions remain outside this file. */
 data class WeatherAppearance(
     val paper: Color,
