@@ -1,52 +1,46 @@
-# Hava
+# hava. ☀️
 
-Türkiye'nin 81 ili için Kotlin / Jetpack Compose hava durumu uygulaması.
-Mevcut yapı: UI → ViewModel → Repository → Retrofit API; durumlar StateFlow ile taşınır.
+**Gökyüzüne bir bakış.**
 
-## Gün ışığı deneyimi
+**hava.**, Türkiye'nin 81 ili için geliştirilmiş, Kotlin ve Jetpack Compose tabanlı bir Android hava durumu uygulamasıdır.
 
-- Şehrin API yanıtındaki saat dilimi kullanılır; telefonun saat diliminden bağımsızdır.
-- Gün doğumu ve gün batımından 2 saat önce özel renk paleti ve davet mesajı açılır.
-- Olaydan sonraki 20 dakika boyunca şafak / gün batımı görünümü korunur.
-- Ekran açıkken zaman 15 saniyede bir kontrol edilir; arka planda zamanlayıcı durur.
-- Gece yarısından sonra doğru günün doğuş/batış verileri seçilir.
-- Saatlik tahmin mevcut saatin başlangıcından sonraki 12 zaman dilimini gösterir.
-- Eksik veriler sıfır yerine “—” olarak görünür. Yaklaşan olay yoksa davet yerine genel mesaj görünür.
+Uygulama, güncel hava durumunu ve saatlik tahminleri sade bir arayüzle sunarken, hava koşullarını ve günün farklı zamanlarını görsel deneyimin bir parçası haline getirmeyi amaçlar.
 
-## Veri ve durum
+## ✨ Özellikler
 
-Open-Meteo geocoding ve forecast servisleri kullanılır. Şehir eşleştirmesi Türkiye,
-normalize edilmiş ad ve il merkezi bilgisiyle yapılır; belirsiz sonuçlar rastgele seçilmez.
-Hatay → Antakya, Kocaeli → İzmit, Sakarya → Adapazarı şehir merkezleri kullanılır.
-Konum çözümlemesi oturum boyunca bellekte saklanır.
+- **81 il için hava durumu:** Şehirleri renkli kartlar üzerinden keşfetme ve arama yaparak istenilen şehre ulaşma.
+- **Güncel hava bilgileri:** Sıcaklık, hissedilen sıcaklık, nem, rüzgâr ve saatlik hava durumu tahminleri.
+- **Gün doğumu ve gün batımı deneyimi:** Şehrin yerel saatine göre gün doğumu ve gün batımı yaklaştığında değişen arayüzler, renk paletleri ve bilgilendirme mesajları.
+- **Dinamik tasarım:** Gündüz, gece ve farklı hava koşullarına uyum sağlayan arka planlar ve görsel öğeler.
+- **Günlük öneriler:** Hava koşullarına göre kullanıcıya sunulan kısa, günlük hayatta işe yarayabilecek öneriler.
 
-Yeni şehir isteği eski isteği iptal eder; ek istek kimliği kontrolü eski sonuçların
-son durumu değiştirmesini engeller. Seçili ekran rememberSaveable, arama SavedStateHandle
-ile korunur. Veriler ekran açıkken 10 dakikada bir yenilenir. Yenileme başarısız olursa
-son veriler uyarıyla gösterilir; manuel tekrar deneme mümkündür.
 
-## Geliştirme ve kontroller
+## 📱 Uygulamadan Görüntüler
 
-Projenin Gradle wrapper ve Java araç zinciri ayarları kullanılır. SDK yolu local.properties
-üzerinden sağlanır. minSdk 24 için java.time desteği core library desugaring ile etkinleştirilmiştir.
+<p align="center">
+  <img src="mainpage.jpeg" width="23%" alt="Ana ekran">
+  <img src="cityview_main.jpeg" width="23%" alt="Şehir ekranı">
+  <img src="hava-v2-gundogumu.png" width="23%" alt="Gün doğumu">
+  <img src="hava-gunbatimi.png" width="23%" alt="Gün batımı">
+</p>
 
-```powershell
-.\gradlew.bat :app:testDebugUnitTest :app:assembleDebug :app:lintDebug
-.\gradlew.bat :app:connectedDebugAndroidTest
-```
 
-WeatherBehaviorTest: saat dilimi, gün ışığı sınırları, gece yarısı, eksik veri,
-belirsiz konum, istek yarışı ve bağlantı hatası.
-WeatherScreenTest: gün batımı daveti, ekran eylemleri, karanlık temada boş durum,
-eski şehrin verisinin yeni başlık altında gösterilmemesi.NavigationStateTest: seçili şehrin Activity yeniden oluşturulduğunda korunması.
+## 🛠️ Teknolojiler ve Mimari
 
-Servis sözleşmeleri: [Forecast API](https://open-meteo.com/en/docs),
-[Geocoding API](https://open-meteo.com/en/docs/geocoding-api).
-Android uyumluluğu: [API desugaring](https://developer.android.com/studio/write/java8-support).
+Uygulama **Kotlin** ve **Jetpack Compose** kullanılarak geliştirilmiştir. Hava durumu ve konum verileri **Open-Meteo API** üzerinden alınmaktadır.
 
-## UI ve hareket
+Proje geliştirilirken **MVVM mimarisi** ve **Separation of Concerns** ilkesi temel alınmıştır. Kullanıcı arayüzü, uygulama durumu ve veri erişimi ayrı sorumluluklar altında düzenlenerek daha anlaşılır ve sürdürülebilir bir kod yapısı oluşturulması hedeflenmiştir.
 
-Referanslardan esinlenen sıcak/serin renk geçişleri, cam paneller, adaptif şehir
-kartları ve uygulamaya gömülü GIF döngüleri kullanılır. UI dosyalarının sorumlulukları,
-GIF kaynakları, yeniden üretim komutu ve hareket politikası [UI tasarım notlarında](docs/UI_DESIGN.md)
-açıklanır. Veri, repository ve ViewModel akışı korunmuştur.
+**Kullanılan teknolojiler:** Kotlin · Jetpack Compose · MVVM · Retrofit · Coroutines · StateFlow · Open-Meteo API
+
+## 🌤️ Proje Hakkında
+
+Bu proje, Android geliştirme ve Jetpack Compose üzerine çalışırken hem API entegrasyonu hem de katmanlı mimari konusunda pratik yapmak amacıyla geliştirildi.
+
+Geliştirme sürecinde özellikle iki noktaya odaklandım: şehir seçim ekranını alışılmış listelerden farklı bir şekilde tasarlamak ve gün doğumu ile gün batımı gibi anları kullanıcı arayüzüne yansıtarak hava durumu deneyimini daha ilgi çekici hale getirmek.
+
+Proje, tasarım ve kullanıcı deneyimi açısından geliştirilmeye açıktır.
+
+---
+
+*Made with Kotlin & Jetpack Compose.*
