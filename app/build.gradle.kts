@@ -38,6 +38,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.coil.compose)
+    implementation(libs.coil.gif)
     coreLibraryDesugaring(libs.desugar)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)

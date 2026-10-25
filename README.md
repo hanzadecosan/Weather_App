@@ -43,3 +43,10 @@ eski şehrin verisinin yeni başlık altında gösterilmemesi.NavigationStateTes
 Servis sözleşmeleri: [Forecast API](https://open-meteo.com/en/docs),
 [Geocoding API](https://open-meteo.com/en/docs/geocoding-api).
 Android uyumluluğu: [API desugaring](https://developer.android.com/studio/write/java8-support).
+
+## UI ve hareket
+
+Referanslardan esinlenen sıcak/serin renk geçişleri, cam paneller, adaptif şehir
+kartları ve uygulamaya gömülü GIF döngüleri kullanılır. UI dosyalarının sorumlulukları,
+GIF kaynakları, yeniden üretim komutu ve hareket politikası [UI tasarım notlarında](docs/UI_DESIGN.md)
+açıklanır. Veri, repository ve ViewModel akışı korunmuştur.

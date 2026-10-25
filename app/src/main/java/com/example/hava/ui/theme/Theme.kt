@@ -15,18 +15,18 @@ import android.content.ContextWrapper
 import androidx.compose.ui.graphics.Color
 
 private val LightColorScheme = lightColorScheme(
-    primary = Color(0xFF275D59), onPrimary = Color.White,
-    background = Color(0xFFF5F4EE), onBackground = Color(0xFF172D32),
-    surface = Color(0xFFF5F4EE), onSurface = Color(0xFF172D32),
-    surfaceContainer = Color(0xFFE9EDE6), onSurfaceVariant = Color(0xFF526568),
-    outline = Color(0xFF748481)
+    primary = Color(0xFF97512F), onPrimary = Color.White,
+    background = Color(0xFFF8F6F2), onBackground = Color(0xFF302C2A),
+    surface = Color(0xFFF8F6F2), onSurface = Color(0xFF302C2A),
+    surfaceContainer = Color(0xFFEEEAE5), onSurfaceVariant = Color(0xFF706760),
+    outline = Color(0xFF9B8F84)
 )
 private val DarkColorScheme = darkColorScheme(
-    primary = Color(0xFFA5D4C5), onPrimary = Color(0xFF123A35),
-    background = Color(0xFF101E24), onBackground = Color(0xFFE4EDE9),
-    surface = Color(0xFF101E24), onSurface = Color(0xFFE4EDE9),
-    surfaceContainer = Color(0xFF1C3037), onSurfaceVariant = Color(0xFFB3C7C6),
-    outline = Color(0xFF7E9695)
+    primary = Color(0xFFFFCB97), onPrimary = Color(0xFF49301E),
+    background = Color(0xFF131B2C), onBackground = Color(0xFFF4F1F6),
+    surface = Color(0xFF131B2C), onSurface = Color(0xFFF4F1F6),
+    surfaceContainer = Color(0xFF202C43), onSurfaceVariant = Color(0xFFB6BCCC),
+    outline = Color(0xFF8490A7)
 )
 
 @Composable
