@@ -92,10 +92,10 @@ private fun CityDiscoveryHero() {
         Column(Modifier.padding(22.dp).width(220.dp)) {
             Text("BUGÜNÜN ROTASI", color = Color(0xFF77552D), fontSize = 9.sp, letterSpacing = 2.sp)
             Spacer(Modifier.height(14.dp))
-            Text("Bir şehir.\nBin gökyüzü.", color = Color(0xFF372A20), fontSize = 31.sp,
+            Text("Bugün hava nasıl? \n Gökyüzüne bir bakış.", color = Color(0xFF372A20), fontSize = 31.sp,
                 lineHeight = 34.sp, letterSpacing = (-1).sp, fontWeight = FontWeight.Medium)
             Spacer(Modifier.height(14.dp))
-            Text("Havayı hisset.\nGünün ışığını yakala.", color = Color(0xFF6F5945), fontSize = 12.sp, lineHeight = 17.sp)
+            Text("Günün ilk ışıklarını yakala.\n Havaya uygun önerilerini \n almayı unutma", color = Color(0xFF6F5945), fontSize = 12.sp, lineHeight = 17.sp)
         }
     }
 }

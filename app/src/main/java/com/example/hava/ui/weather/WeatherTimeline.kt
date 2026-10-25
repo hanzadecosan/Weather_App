@@ -63,7 +63,7 @@ fun solarMessage(timeline: WeatherTimeline): String {
     return when {
         event.time <= timeline.now -> if (event.sunrise) "Güneş doğuyor. Yeni güne merhaba." else "Güneş ufukta kayboluyor. Gökyüzünün renklerini izle."
         minutes < 1 -> "$name başlamak üzere. Gökyüzüne bak."
-        event.time.toLocalDate() == timeline.now.toLocalDate() -> "Bugün saat $at: ${if (event.sunrise) "gün doğumunu" else "gün batımını"} izle."
+        event.time.toLocalDate() == timeline.now.toLocalDate() -> "Bugün saat $at: ${if (event.sunrise) "gün doğumunu " else "gün batımını"} kaçırmayın!"
         else -> "Yarın saat $at: ${if (event.sunrise) "gün doğumunu" else "gün batımını"} izle."
     }
 }

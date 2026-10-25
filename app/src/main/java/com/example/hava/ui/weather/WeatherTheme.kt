@@ -73,9 +73,9 @@ fun weatherColors(kind: WeatherKind): List<Color> =
 fun weatherAdvice(kind: WeatherKind): String =
     when (kind) {
         WeatherKind.SUNNY ->
-            "Açık bir gökyüzü seni bekliyor. Güneş gözlüğünü unutma!"
+            "Açık bir gökyüzü seni bekliyor. Favori tişörtünü ve güneş gözlüğünü unutma! Sahilde bir yürüyüş de enerjini yükseltecektir!"
         WeatherKind.CLOUDY ->
-            "Bulutlu bir gün. Yanına hafif bir ceket almak iyi olabilir."
+            "Bulutlu bir gün. Yanına hafif bir ceket almak iyi olabilir, veya evde kalıp güzel bir kitap okumak da..."
         WeatherKind.FOGGY ->
             "Sis görüş mesafesini azaltabilir. Yolculukta dikkatli ol."
         WeatherKind.RAINY ->
